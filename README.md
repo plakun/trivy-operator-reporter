@@ -12,3 +12,5 @@ cd trivy-operator-reporter
 
 Then open in browser address:
 http://127.0.0.1:5000
+
+![изображение](https://github.com/user-attachments/assets/d36c5a6e-74b0-4f14-b23c-f91b94ae2100)
