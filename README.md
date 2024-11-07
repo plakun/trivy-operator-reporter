@@ -1,6 +1,8 @@
 # trivy-operator-reporter
 Trivy-operator reports exporter written in Python
 
+To run the application, you need to have local kubeconfig on your host for an account with the right permissions in the kubernetes cluster.
+
 Run script:
 ```
 git clone https://github.com/plakun/trivy-operator-reporter
