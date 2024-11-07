@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cluster Audit Report</title>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vulnerability Report</h1>
+    {% if data %}
+        <div class="container">
+            <h2>Report Information:</h2>
+            {% for item in data %}
+            <ul>
+                <li>Report: {{item.data.spec.compliance.title}}</li>
+            </ul>
+            <h2>Report:</h2>
+            <table id="myTable">
+                <tr>
+                    <th>ID</th>
+                    <th>ID2</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>checkFail</th>
+                </tr>
+                {% for index in range(item.data.spec.compliance.controls|length) %}
+                <tr>
+                    <td>{{ item.data.spec.compliance.controls[index].id }}</td>
+                    <td> {% for item2 in item.data.spec.compliance.controls[index].checks %}
+                        {{ item2.id }}
+                        {% endfor %}
+                    </td>
+                    <td>{{ item.data.spec.compliance.controls[index].name }}</td>
+                    <td>{{ item.data.spec.compliance.controls[index].description }}</td>
+                    <td>{{ item.data.status.summaryReport.controlCheck[index].totalFail }}</td>
+                </tr>
+                {% endfor %}
+
+
+            {% endfor %}
+        </div>
+    {% elif error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+<script src="{{url_for('static', filename='color.js')}}"></script>
+</body>
+</html>

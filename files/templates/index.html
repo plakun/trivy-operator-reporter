@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trivy-Operator Reports</title>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vulnerability Reports:</h1>
+    
+    <div class="container"></div>
+            <table id="myTable">
+                <tr>
+                    <th>Report Name</th>
+                    <th>Namespace</th>
+                </tr>
+                {% for key, value in data.items()%}
+                <tr>
+                    <td><a href="http://127.0.0.1:5000/get_resource?namespace={{value}}&resource_name={{key}}">{{ key }}</a></td>
+                    <td>{{value}}</td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+    </div>
+    <h1>Audit Reports:</h1>
+    
+    <div class="container"></div>
+            <table id="myTable">
+                <tr>
+                    <th>Report Name</th>
+                </tr>
+                {% for key, value in data2.items()%}
+                <tr>
+                    <td><a href="http://127.0.0.1:5000/get_report?report_name={{key}}">{{ key }}</a></td>
+                    
+                </tr>
+                {% endfor %}
+            </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vulnerability Report</title>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vulnerability Report</h1>
+    {% if data %}
+        <div class="container">
+            <h2>Artifact Information:</h2>
+            {% for item in data %}
+            <ul>
+                <li>Report: {{item.data.metadata.name}}</li>
+                <li>Namespase: {{item.data.metadata.namespace}}</li>
+                <li>Digest: {{ item.data.report.artifact.digest }}</li>
+                <li>Repository: {{ item.data.report.artifact.repository }}</li>
+                <li>Tag: {{ item.data.report.artifact.tag }}</li>
+            </ul>
+            <h2>OS Information:</h2>
+            <ul>
+                <li>Family: {{ item.data.report.os.family }}</li>
+                <li>Name: {{ item.data.report.os.name }}</li>
+            </ul>
+            <h2>Registry Information:</h2>
+            <ul>
+                <li>Server: {{ item.data.report.registry.server }}</li>
+            </ul>
+            <h2>Summary:</h2>
+            <ul>
+                <li>Critical Count: {{ item.data.report.summary.criticalCount }}</li>
+                <li>High Count: {{ item.data.report.summary.highCount }}</li>
+                <li>Medium Count: {{ item.data.report.summary.mediumCount }}</li>
+                <li>Low Count: {{ item.data.report.summary.lowCount }}</li>
+                <li>None Count: {{ item.data.report.summary.noneCount }}</li>
+                <li>Unknown Count: {{ item.data.report.summary.unknownCount }}</li>
+            </ul>
+            <h2>Vulnerabilities:</h2>
+            <table id="myTable">
+                <tr>
+                    <th>Resource</th>
+                    <th>Title</th>
+                    <th>Vulnerability ID</th>
+                    <th>Severity</th>
+                    <th>Score</th>
+                    <th>Installed Version</th>
+                    <th>Fixed Version</th>
+                    <th>Last Modified Date</th>
+                    <th>Primary Link</th>
+                    <th>Published Date</th>
+                </tr>
+                {% for vulnerability in item.data.report.vulnerabilities %}
+                <tr>
+                    <td>{{ vulnerability.resource }}</td>
+                    <td>{{ vulnerability.title }}</td>
+                    <td>{{ vulnerability.vulnerabilityID }}</td>
+                    <td id = "sev"><p class = "text"></p>{{ vulnerability.severity }}</p></td>
+                    <td>{{ vulnerability.score }}</td>
+                    <td>{{ vulnerability.installedVersion }}</td>
+                    <td>{{ vulnerability.fixedVersion }}</td>
+                    <td>{{ vulnerability.lastModifiedDate }}</td>
+                    <td><a href="{{ vulnerability.primaryLink }}">{{ vulnerability.title }}</a></td>
+                    <td>{{ vulnerability.publishedDate }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endfor %}
+        </div>
+    {% elif error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+<script src="{{url_for('static', filename='color.js')}}"></script>
+<script src="{{url_for('static', filename='sort.js')}}"></script>
+<script type = "text/javascript">
+    sortTable(); 
+    </script>
+</body>
+</html>
